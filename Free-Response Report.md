@@ -68,3 +68,39 @@ Bonus:  2000000
 -----
 ```
 Clearly, these are all valid data points.
+
+## 2. Feature Selection and Scaling
+
+The following features were finally used in the POI identifier:
+```
+'poi'
+'salary'
+'bonus'
+'exercised_stock_options'
+'total_stock_value'
+'from_poi_to_this_person'
+'from_this_person_to_poi'
+'expenses'
+'total_payments'
+```
+These features were selected after comparing the performance of difference combinations of features (carried out in `feature_selection.py`).
+
+The feature groups:
+* **basic_financial** ('poi','salary','bonus')
+* **mixed_2** ('poi','salary','bonus','from_poi_to_this_person','from_this_person_to_poi')
+* **mixed_3** ('poi','salary','bonus','exercised_stock_options','total_stock_value')
+* **mixed_4** ('poi','salary','bonus','exercised_stock_options','total_stock_value','from_poi_to_this_person','from_this_person_to_poi','expenses','total_payments')
+
+perform the best in terms of accuracy, precision and recall.
+
+Hence, these four feature groups will be further tested in the POI identifier code (`poi_id.py`) using the `tester.py` script for different classifiers.
+
+Two new features- **percent_from_poi_to_this_person**, **percent_from_this_person_to_poi** were also engineered. The former measured the percentage of messages from a marked POI to the given person; the latter measure the percentage of messages from the given person to a marked POI. These features indicate how frequently a given person communicates with a POI which can be a factor in determining if a given person is a POI. The performace of these new features is explored is `new_feature_performance.py`.
+
+Further, as the features in the dataset span various ranges, implementing **feature scaling** became imperative. It is done after engineering the new feature in the POI identifier code (`poi_id.py`). As the newly created features are already percentages, there is no need to apply feature scaling on them.
+
+As the classifier finally used for the POI identifier is a Decision Tree, the feature importances are given below.
+```
+[0.05860806 0.         0.15170137 0.20792079 0.         0.23719108
+ 0.3445787  0.        ]
+```
