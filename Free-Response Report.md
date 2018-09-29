@@ -104,3 +104,36 @@ As the classifier finally used for the POI identifier is a Decision Tree, the fe
 [0.05860806 0.         0.15170137 0.20792079 0.         0.23719108
  0.3445787  0.        ]
 ```
+
+## 3. Classifiers
+
+A Decision Tree classifier was finally used for the POI identifier.
+
+The performance of a Decision Tree classifier and a Support Vector Classifier (SVC) were compared (in `poi_id.py`).
+
+The performance metrics are as follows:
+```python
+----- SVC -----
+Training time:  0.001 s
+('Predicting time: ', 0.0, 's')
+Accuracy=  0.88
+/home/m4rvin/anaconda2/lib/python2.7/site-packages/sklearn/metrics/classification.py:1135: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples.
+  'precision', 'predicted', average, warn_for)
+             precision    recall  f1-score   support
+
+        0.0       0.88      1.00      0.94        58
+        1.0       0.00      0.00      0.00         8
+
+avg / total       0.77      0.88      0.82        66
+
+----- Decision Tree -----
+Training time:  0.0 s
+('Predicting time: ', 0.0, 's')
+Accuracy=  0.85
+             precision    recall  f1-score   support
+
+        0.0       0.91      0.91      0.91        58
+        1.0       0.38      0.38      0.38         8
+
+avg / total       0.85      0.85      0.85        66
+```
