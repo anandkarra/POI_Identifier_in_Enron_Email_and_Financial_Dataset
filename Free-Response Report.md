@@ -137,3 +137,47 @@ Accuracy=  0.85
 
 avg / total       0.85      0.85      0.85        66
 ```
+
+## 4. Patameter Tuning
+Tuning the parameters of an algorithm refers to trying out different combinations of parameters of an algorithm to obtain the best performance. This may be done manually or using built-in methods in sklearn like GridSearchCV.
+
+The following parameters for the Decision Tree Classifer were tuned using GridSearchCV: 
+* **criterion** (`gini` and `entropy`)
+* **min_samples_split** (1,10,100,1000)
+* **presort** (False,True)
+
+The following parameters for the SVC were tuned using GridSearchCV: 
+* **kernel** (`linear` and `rbf`)
+* **C** (2,3,4,5,6)
+* **gamma** (0.01,0.02,0.05,0.5,0.2,0.1,1)
+
+
+Overall, after tuning, the Decision Tree Classifier performed better than the SVC. As such, it is used in the final POI identifier (poi_id.py).
+
+The output and performance of both the Classifiers with tuning performed can be found in the `with_tuning` directory.
+
+Failure to tune the parameters of a Classifier may result not only in sub-optimal performance but may also cause the Classifier to overfit to the test data and not be able to generalize well to the testing data.
+
+The following code was used for parameter tuning. Only the features tuned here were expected to affect the performance of the Classifier as the dataset is a very skewed one with only 18 POIs and 128 non-POIs.
+
+```python
+# Tuning Decision Tree Classifier
+parameters_dtc = {'criterion' : ['gini','entropy'],
+                'min_samples_split' : [2,3,4,5,6],
+                'presort' : [False,True]
+            }
+
+dtc = tree.DecisionTreeClassifier(random_state=42)
+clf_dtc = GridSearchCV(dtc,parameters_dtc)
+```
+
+```python
+# Tuning SVC
+parameters_svc = {'kernel' : ['linear','rbf'],
+                'C' : [1,10,100,1000],
+                'gamma' : [0.01,0.02,0.05,0.5,0.2,0.1,1]
+
+}
+
+svr = SVC(random_state=10)
+clf_svc = GridSearchCV(svr,parameters_svc)
