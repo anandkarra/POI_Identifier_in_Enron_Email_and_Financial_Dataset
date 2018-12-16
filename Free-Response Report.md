@@ -181,3 +181,17 @@ parameters_svc = {'kernel' : ['linear','rbf'],
 
 svr = SVC(random_state=10)
 clf_svc = GridSearchCV(svr,parameters_svc)
+```
+
+## 5. Validation
+Validation is a process of splitting the dataset into training and testing sets such that the classifier achieves the best performance possible. Validation accomplishes this by splitting the dataset into the training and testing sets differently and then assessing the performance of the classifier. At the end of the validation process, the classifier has effectively been trained and tested on the entire dataset.
+
+A very common mistake that may slip unnoticed while performing validation is performing validation after doing the feature selection. This leads to a Classifier which over-estimates its performance as the Classifier already has some information about the testing data. To prevent this from happening, validation must be performed before feature selection and then again after feature scaling to achieve the best performance possible.
+
+**KFold Cross validation** with 4 splits was used for the Classifier. It was implemented as follows:
+```python
+from sklearn.model_selection import KFold
+
+kf = KFold(n_splits=4,shuffle=True,random_state=10)
+```
+Based on the performance of the 4 splits, the best split was then selected to form the training and testing data for the Classifier.

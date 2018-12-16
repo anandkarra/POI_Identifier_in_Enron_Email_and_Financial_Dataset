@@ -138,6 +138,59 @@ overall the decision tree classifier performs better considering precision, reca
 and f1-score.
 """
 
+print "---------------------------------------------"
+print "----- Performing KFold cross validation -----"
+print "---------------------------------------------"
+
+from sklearn.model_selection import KFold
+
+kf = KFold(n_splits=4,shuffle=True,random_state=10)
+print kf
+
+for train_index, test_index in kf.split(features):
+    print "Train:\n",train_index
+    print "Test:\n",test_index
+    print "----------"
+    features_train = [features[ii] for ii in train_index]
+    features_test = [features[ii] for ii in test_index]
+    labels_train = [labels[ii] for ii in train_index]
+    labels_test = [labels[ii] for ii in test_index]
+
+    from sklearn import tree
+    clf = tree.DecisionTreeClassifier()
+
+    t0 = time()
+    clf.fit(features_train,labels_train)
+    print "Training time: ",round(time()-t0,3),"s"
+
+
+    t1= time()
+    pred = clf.predict(features_test)
+    print "Predicting time: ",round(time()-t1,3),"s"
+
+    print "Accuracy= ", round(clf.score(features_test,labels_test),2)
+
+    print classification_report(labels_test,pred)
+
+print "--------------------------------------------------------"
+print "----- Using best split from KFold Cross Validation -----"
+print "--------------------------------------------------------"
+
+train_index = [0,1 ,2 ,4 ,5 ,7 ,8 ,9 ,11,12,13,15,16,17,18,19,21,
+  22,23,24,25,26,27,28,30,31,33,35,36,38,39,40,41,44,46,
+  47,48,49,50,51,52,53,54,55,57,59,62,63,64,65,66,67,69,
+  70,71,72,73,74,75,77,78,79,80,81,82,84,85,86,88,89,90,
+  91,92,93,97,98,99,101,102,105,106,107,108,109,111,113,114,115,
+ 120,121,123,124,125,126,127,129,133,134,135,136,137,138,139,140]
+
+test_index = [3,6,14,20,29,32,34,37,42,43,45,56,58,60,61,68,76,83,
+  87,94,95,96,103,104,110,112,116,117,118,119,122,128,130,131,132]
+
+features_train = [features[ii] for ii in train_index]
+features_test = [features[ii] for ii in test_index]
+labels_train = [labels[ii] for ii in train_index]
+labels_test = [labels[ii] for ii in test_index]
+
 # Dumping the classifier, dataset and features_list so that anyone can check the 
 # results
 
