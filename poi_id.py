@@ -191,6 +191,35 @@ features_test = [features[ii] for ii in test_index]
 labels_train = [labels[ii] for ii in train_index]
 labels_test = [labels[ii] for ii in test_index]
 
+print "------------------------------------------"
+print "----- After tuning with GridSearchCV -----"
+print "------------------------------------------"
+
+parameters_dtc = {'criterion' : ['gini','entropy'],
+                'min_samples_split' : [2,3,4,5,6],
+                'presort' : [False,True]
+            }
+
+print "----- Decision Tree -----"
+
+dtc = tree.DecisionTreeClassifier(random_state=42)
+clf_dtc = GridSearchCV(dtc,parameters_dtc)
+
+t0 = time()
+clf_dtc.fit(features_train,labels_train)
+print "Training time: ",round(time()-t0,3),"s"
+
+
+t1= time()
+pred = clf_dtc.predict(features_test)
+print "Predicting time: ",round(time()-t1,3),"s"
+
+print "Accuracy= ", round(clf_dtc.score(features_test,labels_test),2)
+
+print classification_report(labels_test,pred)
+
+print "Best parameters: ", clf_dtc.best_params_
+
 # Dumping the classifier, dataset and features_list so that anyone can check the 
 # results
 

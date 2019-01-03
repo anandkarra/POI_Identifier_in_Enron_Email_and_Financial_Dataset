@@ -195,3 +195,20 @@ from sklearn.model_selection import KFold
 kf = KFold(n_splits=4,shuffle=True,random_state=10)
 ```
 Based on the performance of the 4 splits, the best split was then selected to form the training and testing data for the Classifier.
+
+## 6. Evaluation Metrics
+Precision and Recall were the two evaluation metrics that were of prime importance in the implementation of the POI identifier as we can understand from the meanings of these terms. For this specific use case, the meanings of Precision and Recall can be described as follows:
+* **Precision :** The probabilty that the if the Classifier identifies a given person as a POI then he/she is actually a POI.
+* **Recall :** The probability that the Classifier correctly identifies a given person as a POI provided that the he/she is actually a POI.
+
+The tuned Decision Tree Classifier gives the following metrics.
+
+| Metric | Value|
+|--|--|
+| Accuracy | 0.821 |
+| Precision | 0.322 |
+| Recall | 0.313 |
+
+Practically, these metrics translate to the Classifer correctly predicting a given person as a POI and a given person predicted to be a POI to actually be one in about one-third of the cases. In combination with a 82% accuracy, this Classifier forms a very practical POI identifier.
+
+----
